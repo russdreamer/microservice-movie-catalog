@@ -9,6 +9,9 @@ public class Rating {
         this.movieRating = movieRating;
     }
 
+    public Rating() {
+    }
+
     public String getMovieId() {
         return movieId;
     }
