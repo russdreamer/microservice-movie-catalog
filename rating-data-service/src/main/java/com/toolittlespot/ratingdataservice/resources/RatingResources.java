@@ -23,8 +23,8 @@ public class RatingResources {
         var userRating = new UserRating();
         userRating.setUserRating(
                 Arrays.asList(
-                        new Rating("1234", 4),
-                        new Rating("5678", 4)
+                        new Rating("100", 4),
+                        new Rating("200", 4)
                 )
         );
         return userRating;
