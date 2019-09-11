@@ -3,13 +3,23 @@ package com.toolittlespot.moviecatalogservice.models;
 public class Movie {
     private String movieId;
     private String movieName;
+    private String movieDescription;
+
+    public Movie(String movieId, String movieName, String movieDescription) {
+        this.movieId = movieId;
+        this.movieName = movieName;
+        this.movieDescription = movieDescription;
+    }
 
     public Movie() {
     }
 
-    public Movie(String movieId, String movieName) {
-        this.movieId = movieId;
-        this.movieName = movieName;
+    public String getMovieDescription() {
+        return movieDescription;
+    }
+
+    public void setMovieDescription(String movieDescription) {
+        this.movieDescription = movieDescription;
     }
 
     public String getMovieId() {
