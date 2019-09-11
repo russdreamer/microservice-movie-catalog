@@ -31,7 +31,7 @@ public class MovieCatalogResource {
 
         return ratings.getUserRating().stream().map(rating ->  {
             Movie movie = restTemplate.getForObject("http://movie-info-service/movies/" + rating.getMovieId(), Movie.class);
-            return new CatalogItem(movie.getMovieName(), "about robots", rating.getMovieRating());
+            return new CatalogItem(movie.getMovieName(), movie.getMovieDescription(), rating.getMovieRating());
         }).collect(Collectors.toList());
     }
 }
