@@ -21,6 +21,11 @@ public class MovieResource {
 
     @RequestMapping("/{movieId}")
     public Movie getMovieInfo(@PathVariable String movieId){
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         MovieSummary movieSummary = restTemplate.getForObject(
                 "https://api.themoviedb.org/3/movie/" + movieId + "?api_key=" + apiKey,
                 MovieSummary.class);

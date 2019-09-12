@@ -1,8 +1,9 @@
 package com.toolittlespot.moviecatalogservice.resources;
 
 import com.toolittlespot.moviecatalogservice.models.CatalogItem;
-import com.toolittlespot.moviecatalogservice.models.Movie;
 import com.toolittlespot.moviecatalogservice.models.UserRating;
+import com.toolittlespot.moviecatalogservice.services.MovieInfo;
+import com.toolittlespot.moviecatalogservice.services.UserRatingInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,15 +24,16 @@ public class MovieCatalogResource {
     @Autowired
     WebClient.Builder webClientBuilder;
 
-    @RequestMapping("/{userId}")
-    public List<CatalogItem> getCatalog(@PathVariable String userId){
-        UserRating ratings = restTemplate.getForObject(
-                "http://rating-data-service/ratingsdata/users/" + userId,
-                UserRating.class);
+    @Autowired
+    UserRatingInfo userRatingInfo;
 
-        return ratings.getUserRating().stream().map(rating ->  {
-            Movie movie = restTemplate.getForObject("http://movie-info-service/movies/" + rating.getMovieId(), Movie.class);
-            return new CatalogItem(movie.getMovieName(), movie.getMovieDescription(), rating.getMovieRating());
-        }).collect(Collectors.toList());
+    @Autowired
+    MovieInfo movieInfo;
+
+    @RequestMapping("/{userId}")
+    public List<CatalogItem> getCatalog(@PathVariable String userId) {
+        UserRating ratings = userRatingInfo.getUserRating(userId);
+
+        return ratings.getUserRating().stream().map(movieInfo::getCatalogItem).collect(Collectors.toList());
     }
 }
